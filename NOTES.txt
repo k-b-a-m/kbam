@@ -1,0 +1,19 @@
+Game state source of truth is on Server, it's like this to prevent cheating
+
+However this may need to lag on client side.
+
+Hence came along client side prediction.
+
+Since state is deterministic, moves/attacks can be predictively shown on Client before they are confirmed true on Server*. 
+    The Client will be unable to cheat because their position will be adjusted by server in a state update.
+
+One more issue can show up is where the client sends two moves/attacks, the server receives the first move/attack, and confirms it AFTER the client has predictively made the 2nd move/attack, leading the client to lag back
+This can be solved by adding a counter to moves/attacks.
+
+
+
+*Don't show player deaths, player deaths should always be determined by the server
+
+IMPORTANT Server should update at 30 Hz recommended  
+
+IMPORTANTPacket max size is 512Bytes to avoid packet loss.  Try to packets lower than 512Bytes
