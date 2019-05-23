@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
   devtool: 'eval',
-  entry: './client/index.js',
+  entry: './client',
   output: {
     path:path.resolve(__dirname, "public")
   },
