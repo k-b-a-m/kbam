@@ -1,7 +1,6 @@
 const path = require('path')
 
 module.exports = {
-  entry: './src',
   devtool: 'eval',
   entry: './client/index.js',
   output: {
