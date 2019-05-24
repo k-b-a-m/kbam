@@ -1,9 +1,8 @@
 const path = require('path')
 
 module.exports = {
-  entry: './src',
   devtool: 'eval',
-  entry: './client/index.js',
+  entry: './client',
   output: {
     path:path.resolve(__dirname, "public")
   },
