@@ -1,22 +1,28 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
 
 
-class App extends Component{
-  constructor(){
+//import style
+import '../styles/App.css';
+
+class App extends Component {
+  constructor() {
     super();
-    this.state={
-      playerName:'Enter Your Name'
-    }
+    this.state = {
+      playerName: 'Enter Your Name',
+    };
   }
 
-  render(){
-    <div>
-      <form>
-        <input type='text'></input>
-        <button type='submit'>Enter</button>
-      </form>
-    </div>
+
+  render() {
+    return (
+      <div className='app-container'>
+        <form>
+          <input type="text" />
+          <button type="submit">Enter</button>
+        </form>
+      </div>
+    );
   }
 }
 
