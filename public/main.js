@@ -86,14 +86,51 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./client/classes/Engine.js":
+/*!**********************************!*\
+  !*** ./client/classes/Engine.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Engine; });\nconst canvas = document.getElementById(\"canvas\");\nconst ctx = canvas.getContext(\"2d\");\n\nfunction percentX(percent) {\n  return Math.round(percent / 100 * window.innerWidth);\n}\nfunction percentY(percent) {\n  return Math.round(percent / 100 * window.innerHeight);\n}\n\nclass Engine {\n  constructor() {\n    this.newGame = world => {\n      this.createWorld(world);\n    };\n\n    this.createWorld = world => {\n      // ctx.strokeRect(percentX(50), percentY(50), world.size.w, world.size.h);\n      ctx.fillRect(150, 10, 1000, 1000);\n      ctx.beginPath();\n      ctx.arc(100, 100, 75, 0, 2 * Math.PI);\n      ctx.lineWidth = 5;\n      ctx.stroke();\n    };\n\n    this.gameOver = () => {};\n\n    this.worldState = {};\n    this.playersState = [];\n    this.weaponsState = [];\n    this.obstaclesState = [];\n    this.buildingsState = [];\n  }\n};\n\n//# sourceURL=webpack:///./client/classes/Engine.js?");
+
+/***/ }),
+
+/***/ "./client/classes/Player.js":
+/*!**********************************!*\
+  !*** ./client/classes/Player.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Player; });\nclass Player {\n    constructor(x, y, health = 100) {\n        this.shoot = coordinates => {};\n\n        this.move = input => {};\n\n        this.getPosition = () => {\n            return [this.x, this.y];\n        };\n\n        this.health = health;\n        this.x = x;\n        this.y = y;\n        this.height = 30;\n        this.width = 30;\n    }\n\n}\n\n//# sourceURL=webpack:///./client/classes/Player.js?");
+
+/***/ }),
+
+/***/ "./client/classes/World.js":
+/*!*********************************!*\
+  !*** ./client/classes/World.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return World; });\nclass World {\n  constructor(size = { w: window.innerWidth, h: window.innerHeight }, buildings, obstacles, weapons) {\n    this.size = size;\n    this.buildings = buildings || [];\n    this.obstacles = obstacles || [];\n    this.weapons = weapons || [];\n  }\n};\n\n//# sourceURL=webpack:///./client/classes/World.js?");
+
+/***/ }),
+
 /***/ "./client/index.js":
 /*!*************************!*\
   !*** ./client/index.js ***!
   \*************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("const canvas = document.getElementById(\"canvas\");\nconst ctx = canvas.getContext(\"2d\");\n\n//io is already declared from socket.io/socket.io.js in index.html\nconst socket = io(window.location.origin);\n\n//WEBSOCKET DEMO BELOW FEEL FREE TO DELETE\n\n// socket.on(\"connect\", function() {\n//   console.log(\"I have made a connection to the server!\");\n// });\n\n// //Generate random position for player to start\n// const pos = [Math.random() * 500, Math.random() * 500];\n\n// //Draw player\n// ctx.fillStyle = \"#FF0000\"\n// ctx.fillRect(...pos, 30, 30);\n\n\n// //Send player position to socket\n// socket.emit(\"position\", pos);\n\n// //Listen for updates on player positions\n// socket.on(\"position\", pos => {\n//   console.log(pos);\n//   draw(pos);\n// })\n\n// //Draw already existing players\n// socket.on('allPositions', positionList => {\n//   positionList.forEach(position => {\n//     draw(position);\n//   })\n// })\n\n// //This function need to be rewritten in a game function\n// const draw = pos => {\n//   ctx.fillStyle = \"#000000\"\n//   ctx.fillRect(...pos, 30, 30);\n// };\n\n//# sourceURL=webpack:///./client/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _classes_Player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classes/Player */ \"./client/classes/Player.js\");\n/* harmony import */ var _classes_Engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./classes/Engine */ \"./client/classes/Engine.js\");\n/* harmony import */ var _classes_World__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./classes/World */ \"./client/classes/World.js\");\n\n\n\nconst canvas = document.getElementById(\"canvas\");\nconst ctx = canvas.getContext(\"2d\");\n\nconst world = new _classes_World__WEBPACK_IMPORTED_MODULE_2__[\"default\"]();\nconst engine = new _classes_Engine__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\nengine.newGame(world);\n\n//io is already declared from socket.io/socket.io.js in index.html\nconst socket = io(window.location.origin);\n\nsocket.on(\"connect\", function () {\n  console.log(\"I have made a connection to the server!\");\n});\n\n// //Make new player at random position\n// const player = new Player(Math.random() * 500, Math.random() * 500);\n\n// //move\n// let move = {\n//   up: false,\n//   down: false,\n//   right: false,\n//   left: false\n// };\n\n// //Key down event listener to continue moving\n// document.addEventListener(\"keydown\", event => {\n//   switch (event.keyCode) {\n//     case 38: //Up Arrow\n//     case 87: //W\n//       move.up = true;\n//       break;\n//     case 40: //Down Arrow\n//     case 83: // S\n//       move.down = true;\n//       break;\n//     case 39: //Right Arrow\n//     case 68: // D\n//       move.right = true;\n//       break;\n//     case 37: //Left Arrow\n//     case 65: // A\n//       move.left = true;\n//       break;\n//   }\n// });\n\n// //Key up event listener to stop moving\n// document.addEventListener(\"keyup\", (event) => {\n//   switch (event.keyCode) {\n//     case 38: //Up Arrow\n//     case 87: //W\n//       move.up = false;\n//       break;\n//     case 40: //Down Arrow\n//     case 83: // S\n//       move.down = false;\n//       break;\n//     case 39: //Right Arrow\n//     case 68: // D\n//       move.right = false;\n//       break;\n//     case 37: //Left Arrow\n//     case 65: // A\n//       move.left = false;\n//       break;\n//   }\n// });\n\n// //Send new player to socket\n// socket.emit(\"player\", player);\n\n// //Emit move to server\n// // setInterval(() => socket.emit(\"move\", move), 1000/60)\n\n// //Listen for updates on other players\n// socket.on(\"player\", player => {\n//   draw(player);\n// });\n\n// //Draw positions of all players\n// socket.on(\"allPlayers\", allPlayers => {\n//   console.log(allPlayers);\n\n//   //Clear canvas before drawing\n//   // ctx.clearRect(0, 0, 1000, 1000)\n//   for (let p in allPlayers){\n//     draw(allPlayers[p])\n//   }\n// });\n\n// //This function need to be rewritten in a game function\n// const draw = obj => {\n//   ctx.fillStyle = \"#000000\";\n//   ctx.fillRect(obj.x, obj.y, obj.height, obj.width);\n// };\n\n//# sourceURL=webpack:///./client/index.js?");
 
 /***/ })
 

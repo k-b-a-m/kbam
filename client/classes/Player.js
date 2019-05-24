@@ -1,9 +1,11 @@
 export default class Player {
-	constructor(position = {x:0, y:0}, health = 100, lives = 1){
-        this.lives = lives
-        this.position = position
-        this.health = health
-	};
+	constructor(x, y, health = 100, ){
+        this.health = health;
+        this.x = x;
+        this.y = y;
+        this.height = 30;
+        this.width = 30;
+	}
 
 	shoot = (coordinates) => {
 
@@ -14,13 +16,6 @@ export default class Player {
     };
 
     getPosition = () => {
-        return this.position
-    };
-
-    getHurt = (damage) => {
-        this.health = this.health - damage;
-    };
-};
-
-const joe = new Player({x: 50, y: 100}, 50, 1);
-console.log(joe.health);
+        return [this.x, this.y]
+    }
+}
