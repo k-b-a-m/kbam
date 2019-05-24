@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
-
-
-//import style
-import '../styles/App.css';
+import Lobby from './Lobby'
+import WaitingArea from './WaitingArea';
+import Game from './Game';
 
 class App extends Component {
   constructor() {
@@ -16,11 +15,10 @@ class App extends Component {
 
   render() {
     return (
-      <div className='app-container'>
-        <form>
-          <input type="text" />
-          <button type="submit">Enter</button>
-        </form>
+      <div>
+        <Route path='/lobby' component={Lobby}/>
+        <Route path='/waitingarea' component={WaitingArea}/>
+        <Route path='/game' component={Game}/>
       </div>
     );
   }
