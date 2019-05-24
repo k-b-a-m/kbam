@@ -1,7 +1,8 @@
 export default class Player {
-	constructor(position = {x:0, y:0}, health = 100, ){
-        this._lives = lives
-        this._position = position
+	constructor(x, y, health = 100, ){
+        this.health = health
+        this.x = x,
+        this.y = y
 	}
 
 	shoot = (coordinates) => {
@@ -13,6 +14,6 @@ export default class Player {
     }
 
     getPosition = () => {
-        return this._position
+        return [this.x, this.y]
     }
 }
