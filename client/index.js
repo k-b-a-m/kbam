@@ -1,43 +1,94 @@
+import Player from "./classes/Player";
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 //io is already declared from socket.io/socket.io.js in index.html
 const socket = io(window.location.origin);
 
+socket.on("connect", function() {
+  console.log("I have made a connection to the server!");
+});
 
+//Make new player at random position
+const player = new Player(Math.random() * 500, Math.random() * 500);
 
-//WEBSOCKET DEMO BELOW FEEL FREE TO DELETE
+//move
+let move = {
+  up: false,
+  down: false,
+  right: false,
+  left: false
+};
 
-// socket.on("connect", function() {
-//   console.log("I have made a connection to the server!");
-// });
+//Key down event listener to continue moving
+document.addEventListener("keydown", event => {
+  switch (event.keyCode) {
+    case 38: //Up Arrow
+    case 87: //W
+      move.up = true;
+      break;
+    case 40: //Down Arrow
+    case 83: // S
+      move.down = true;
+      break;
+    case 39: //Right Arrow
+    case 68: // D
+      move.right = true;
+      break;
+    case 37: //Left Arrow
+    case 65: // A
+      move.left = true;
+      break;
+  }
+});
 
-// //Generate random position for player to start
-// const pos = [Math.random() * 500, Math.random() * 500];
+//Key up event listener to stop moving
+document.addEventListener("keyup", (event) => {
+  switch (event.keyCode) {
+    case 38: //Up Arrow
+    case 87: //W
+      move.up = false;
+      break;
+    case 40: //Down Arrow
+    case 83: // S
+      move.down = false;
+      break;
+    case 39: //Right Arrow
+    case 68: // D
+      move.right = false;
+      break;
+    case 37: //Left Arrow
+    case 65: // A
+      move.left = false;
+      break;
+  }
+});
 
-// //Draw player
-// ctx.fillStyle = "#FF0000"
-// ctx.fillRect(...pos, 30, 30);
+//Send new player to socket
+socket.emit("player", player);
 
+//Emit move to server
+setInterval(() => socket.emit("move", move), 1000/60)
 
-// //Send player position to socket
-// socket.emit("position", pos);
+//Listen for updates on other players
+socket.on("player", player => {
+  draw(player);
+});
 
-// //Listen for updates on player positions
-// socket.on("position", pos => {
-//   console.log(pos);
-//   draw(pos);
-// })
+//Draw positions of all players
+socket.on("allPlayers", allPlayers => {
+  console.log(allPlayers);
 
-// //Draw already existing players
-// socket.on('allPositions', positionList => {
-//   positionList.forEach(position => {
-//     draw(position);
-//   })
-// })
+  //Clear canvas before drawing
+  ctx.clearRect(0, 0, 1000, 1000)
+  for (let p in allPlayers){
+    draw(allPlayers[p])
+  } 
+});
 
-// //This function need to be rewritten in a game function
-// const draw = pos => {
-//   ctx.fillStyle = "#000000"
-//   ctx.fillRect(...pos, 30, 30);
-// };
+//This function need to be rewritten in a game function
+const draw = player => {
+  console.log(player);
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(player.x, player.y, 30, 30);
+};
