@@ -1,7 +1,13 @@
-.app-container {
+.lobby-container {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  align-content: center;
+  text-align: center
+}
+
+.name-input{
+  width: 70vw;
 }
