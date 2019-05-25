@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import Socket from '../socket';
+import socket from '../socket';
 
 //import style
 import '../styles/Home.css';
-import socket from '../socket';
 
 class Home extends Component {
   constructor() {
@@ -20,7 +19,6 @@ class Home extends Component {
   handleSubmit = evt => {
     evt.preventDefault();
     const {playerName} = this.state;
-    console.log(playerName);
     socket.emit('joinLobby', playerName);
     this.props.history.push('/lobby');
   };

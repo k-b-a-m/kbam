@@ -4,8 +4,8 @@ export const GET_LOBBY = 'GET_LOBBY';
 
 //Actions Creators
 
-export const getLobby = name => {
-  return {type: GET_LOBBY, name};
+export const getLobby = names => {
+  return {type: GET_LOBBY, names};
 };
 
 //Thunks

@@ -1,9 +1,9 @@
 const {JOIN_LOBBY} = require('../actions/lobbyActions');
 
-const lobbyReducer = (state = {}, action) => {
+const lobbyReducer = (state = [], action) => {
   switch (action.type) {
     case JOIN_LOBBY:
-      return {...state, names: [...state.names, action.name]};
+      return [...state, action.name];
     default:
       return state;
   }
