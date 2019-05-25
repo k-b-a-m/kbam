@@ -1,8 +1,8 @@
-import {JOIN_LOBBY} from '../actions/lobbyActions';
+import {GET_LOBBY} from '../actions/lobbyActions';
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case JOIN_LOBBY:
+    case GET_LOBBY:
       return {...state, names: [...state.names, action.name]};
     default:
       return state;

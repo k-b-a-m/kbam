@@ -51,6 +51,8 @@ module.exports = io => {
       //add new player to lobby
       socket.on('joinLobby', name => {
         store.dispatch(joinLobby(name));
+        const {names} = store.getState();
+        socket.emit('newLobby', names);
       });
     });
   };
