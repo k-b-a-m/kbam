@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
-import Lobby from './Lobby'
-import WaitingArea from './WaitingArea';
+import Home from './Home';
+import WaitingArea from './Lobby';
 import Game from './Game';
 
+//import style
+import '../styles/App.css';
 class App extends Component {
   constructor() {
     super();
@@ -12,13 +14,12 @@ class App extends Component {
     };
   }
 
-
   render() {
     return (
       <div>
-        <Route path='/lobby' component={Lobby}/>
-        <Route path='/waitingarea' component={WaitingArea}/>
-        <Route path='/game' component={Game}/>
+        <Route exact path="/" component={Home} />
+        <Route path="/waitingarea" component={WaitingArea} />
+        <Route path="/game" component={Game} />
       </div>
     );
   }

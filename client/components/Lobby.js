@@ -1,44 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-//import style
-import '../styles/Lobby.css';
 
-class Lobby extends Component {
-  constructor() {
-    super();
-    this.state = {
-      playerName: '',
-    };
-  }
 
-  handleChange = evt => {
-    this.setState({playerName: evt.target.value});
-  };
 
-  handleSubmit = evt => {
-    evt.preventDefault();
-    console.log(this.state.playerName)
-  };
+//fake seed
+const players= ['joe','john','wes','vil']
 
-  render() {
-    const {playerName} = this.state;
-    return (
-      <div className="lobby-container">
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <input
-              className="name-input"
-              type="text"
-              placeholder="Enter Your Name"
-              value={playerName}
-              onChange={this.handleChange}
-            />
-          </div>
-          <button type="submit">Enter</button>
-        </form>
-      </div>
-    );
-  }
-}
+const Lobby = () => {
+  return <div>
+    <ul>
+      {players.map(player=><li>{player}</li>)}
+    </ul>
+  </div>;
+};
 
 export default Lobby;
