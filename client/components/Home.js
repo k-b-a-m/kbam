@@ -18,6 +18,7 @@ class Home extends Component {
   handleSubmit = evt => {
     evt.preventDefault();
     console.log(this.state.playerName);
+    this.props.history.push('/lobby');
   };
 
   render() {
@@ -29,7 +30,7 @@ class Home extends Component {
         </div>
         <div>
           <form onSubmit={this.handleSubmit}>
-            <div>
+            <div className="flex-column-container">
               <input
                 className="name-input"
                 type="text"
@@ -38,9 +39,10 @@ class Home extends Component {
                 onChange={this.handleChange}
                 autoFocus
               />
+
+              <button type="submit">Enter</button>
             </div>
           </form>
-          <button type="submit">Enter</button>
         </div>
       </div>
     );

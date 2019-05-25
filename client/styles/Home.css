@@ -8,7 +8,19 @@
   align-content: center;
   text-align: center
 }
+.flex-column-container{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
 
 .name-input{
   width: 70vw;
+}
+
+button{
+  width: 100px;
+  margin: 20px;
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
 import Home from './Home';
-import WaitingArea from './Lobby';
+import Lobby from './Lobby';
 import Game from './Game';
 
 //import style
@@ -18,7 +18,7 @@ class App extends Component {
     return (
       <div>
         <Route exact path="/" component={Home} />
-        <Route path="/waitingarea" component={WaitingArea} />
+        <Route path="/lobby" component={Lobby} />
         <Route path="/game" component={Game} />
       </div>
     );
