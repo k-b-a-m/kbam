@@ -1,10 +1,10 @@
 //Actions constants
 
-export const JOIN_LOBBY = 'JOIN_LOBBY';
+const JOIN_LOBBY = 'JOIN_LOBBY';
 
 //Actions Creators
 
-export const joinLobby = name => {
+const joinLobby = name => {
   return {type: JOIN_LOBBY, name};
 };
 
@@ -15,3 +15,8 @@ export const joinLobby = name => {
 //     dispatch(joinLobby(name));
 //   };
 // };
+
+module.exports={
+  JOIN_LOBBY,
+  joinLobby
+}

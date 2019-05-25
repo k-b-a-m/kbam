@@ -7,6 +7,6 @@ const rootReducer = combineReducers({
   names: lobbyReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer);
 
 module.exports = store;

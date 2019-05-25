@@ -1,7 +1,8 @@
-const {createStore, applyMiddleware, combineReducers} = require('redux');
-const playersReducer = require('./reducers/playersReducer.js');
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import lobbyReducer from './reducers/lobbyReducer.js';
+import playersReducer from './reducers/playersReducer';
+
+import lobbyReducer from './reducers/lobbyReducer';
 
 const rootReducer = combineReducers({
   players: playersReducer,
@@ -10,4 +11,4 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-module.exports = store;
+export default store;

@@ -1,6 +1,6 @@
-import {JOIN_LOBBY} from '../actions/lobbyActions';
+const {JOIN_LOBBY} = require('../actions/lobbyActions');
 
-export default (state = {}, action) => {
+const lobbyReducer = (state = {}, action) => {
   switch (action.type) {
     case JOIN_LOBBY:
       return {...state, names: [...state.names, action.name]};
@@ -8,3 +8,5 @@ export default (state = {}, action) => {
       return state;
   }
 };
+
+module.exports = lobbyReducer;
