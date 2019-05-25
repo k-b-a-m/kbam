@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
+import {Provider} from 'react-redux'
+
+//components
 import Home from './Home';
 import Lobby from './Lobby';
 import Game from './Game';
