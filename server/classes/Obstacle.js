@@ -1,4 +1,4 @@
-export default class Obstacle {
+module.exports = class Obstacle {
     constructor(x, y, w, h, passable = false, deathTouch = false ){
         this.x = x,
         this.y = y,
@@ -8,7 +8,7 @@ export default class Obstacle {
         this.deathTouch = deathTouch
     }
 
-    getPosition = () =>{
-        return {x,y}
+    getPosition(){
+        return {x:this.x,y:this.y}
     }
 }

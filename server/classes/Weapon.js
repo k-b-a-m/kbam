@@ -1,4 +1,4 @@
-export default class Weapon {
+module.exports = class Weapon {
     constructor(name, x, y, h = 15, w = 15, ammo, explosive = false,spread = 1){
         this.name = name,
         this.x = x,
@@ -10,7 +10,7 @@ export default class Weapon {
         this.spread = spread
     }
 
-    getPosition = () =>{
-        return {x,y}
+    getPosition(){
+        return {x:this.x,y:this.y}
     }
 }
