@@ -1,4 +1,4 @@
-export default class Projectile {
+module.exports = class Projectile {
     constructor(x, y, h = 2, w = 2, speed){
         this.speed = speed,
         this.x = x,
@@ -8,7 +8,7 @@ export default class Projectile {
         this.speed = speed
     }
 
-    getPosition = () =>{
-        return {x,y}
+    getPosition(){
+        return {x:this.x,y:this.y}
     }
 }
