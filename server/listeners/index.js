@@ -24,8 +24,7 @@ module.exports = io => {
 
     // Listen for new players
     socket.on("newPlayer", player => {
-      console.log(player)
-     // gameState.players[socket.id] = player;
+      gameState.players[socket.id] = player;
     });
 
     // Listen for new moves
