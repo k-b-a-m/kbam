@@ -21,12 +21,13 @@ class Home extends Component {
   handleSubmit = evt => {
     evt.preventDefault();
     const {playerName} = this.state;
-    const lobby = this.props.lobby.slice()
-    const newLobby = [...lobby,{id:socket.id,name:playerName, isReady:false}]
-    this.props.addNewLobby(newLobby);
     socket.emit('joinLobby', playerName);
-    this.props.history.push('/lobby');
   };
+
+  componentDidUpdate() {
+    if (this.props.lobby.find(player => player.id === socket.id))
+      this.props.history.push('/lobby');
+  }
 
   render() {
     const {playerName} = this.state;
@@ -60,13 +61,4 @@ const mapStateToProps = state => {
   return {lobby: state.lobby};
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addNewLobby: () => dispatch(addNewLobby()),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+export default connect(mapStateToProps)(Home);
