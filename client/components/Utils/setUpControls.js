@@ -1,5 +1,5 @@
 import socket from "../../socket";
-export default document => {
+export default (document, player) => {
   let move = {
     up: false,
     down: false,
@@ -12,18 +12,22 @@ export default document => {
     switch (event.keyCode) {
       case 38: //Up Arrow
       case 87: //W
+        player.position.y -= 1;
         move.up = true;
         break;
       case 40: //Down Arrow
       case 83: // S
+        player.position.y += 1;
         move.down = true;
         break;
       case 39: //Right Arrow
       case 68: // D
+        player.position.x += 1;
         move.right = true;
         break;
       case 37: //Left Arrow
       case 65: // A
+        player.position.x -= 1;
         move.left = true;
         break;
     }
@@ -52,8 +56,7 @@ export default document => {
   });
 
   document.addEventListener("click", event => {
-      console.log(event)
-  })
-  
-  setInterval(() => socket.emit("move", move), 1000 / 60);
+    console.log(event);
+  });
+  // setInterval(() => socket.emit("move", move), 1000 / 60);
 };
