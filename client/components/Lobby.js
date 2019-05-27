@@ -2,17 +2,17 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import socket from '../socket';
 
-const currentPlayer = 'joe';
-
 //import style
 import '../styles/Lobby.css';
 const Lobby = props => {
+  const handleClick = () => {
+    socket.emit('toggleReady', socket.id);
+  };
 
-  const handleReady= ()=>{
-
-  }
   const {lobby} = props;
   if (!lobby.length) return <div />;
+  const currentPlayer = lobby.find(player => player.id === socket.id);
+  console.log(currentPlayer)
   return (
     <div>
       <div>
@@ -20,15 +20,18 @@ const Lobby = props => {
           {lobby.map(player => (
             <li
               key={player.id}
-              className={`${name === currentPlayer ? 'current-player' : ''}`}
+              className={`${name === currentPlayer.name ? 'current-player' : ''} ${player.isReady? 'ready':''}`}
             >
               {player.name}
             </li>
           ))}
         </ol>
       </div>
-      <button>Ready</button>
-      <button>Cancel</button>
+      {currentPlayer.isReady ? (
+        <button onClick={handleClick}>Cancel</button>
+      ) : (
+        <button onClick={handleClick}>Ready</button>
+      )}
     </div>
   );
 };

@@ -50,10 +50,17 @@ module.exports = io => {
     //add new player to lobby
     socket.on('joinLobby', name => {
       gameState.lobby.push({id: socket.id, name: name, isReady: false});
-      console.log(gameState.lobby);
       socket.emit('newLobby', gameState.lobby);
       socket.broadcast.emit('addNewLobby', gameState.lobby[gameState.lobby.length-1]);
     });
+
+    //when player click ready
+    socket.on('toggleReady',id =>{
+      const player = gameState.lobby.filter(player => player.id ===id);
+      player.isReady = !player.isReady;
+      socket.emit('toggleReady', id);
+      socket.broadcast.emit('newPlayerReady', id)
+    })
 
     //gameEngine transforms gameState and emits whole new state to client
     setInterval(() =>
