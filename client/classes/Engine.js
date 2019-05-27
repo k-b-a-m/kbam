@@ -1,12 +1,12 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-function percentX(percent) {
-  return Math.round(percent/100 * window.innerWidth);
-}
-function percentY(percent) {
-  return Math.round(percent/100 * window.innerHeight);
-}
+// function percentX(percent) {
+//   return Math.round(percent/100 * window.innerWidth);
+// }
+// function percentY(percent) {
+//   return Math.round(percent/100 * window.innerHeight);
+// }
 
 export default class Engine {
   constructor(){
