@@ -1,24 +1,37 @@
-import React, {Component}from 'react';
+import React from 'react';
+import {connect} from 'react-redux';
+
+//fake seed
+const othersName = ['joe', 'john', 'vil', 'wes'];
+const currentPlayer = 'joe';
 
 //import style
 import '../styles/Lobby.css';
+const Lobby = props => {
+  const {names}= props;
+  console.log(names);
+  return (
+    <div>
+      <div>
+        <ol>
+          {names.map((name, index) => (
+            <li
+              key={index}
+              className={`${name === currentPlayer ? 'current-player' : ''}`}
+            >
+              {name}
+            </li>
+          ))}
+        </ol>
+      </div>
+      <button>Ready</button>
+      <button onClick={() => props.history.push('/')}>Cancel</button>
+    </div>
+  );
+};
 
-class Lobby extends Component{
-  constructor(){
-    super();
-    this.state={
-      playerName:''
-    }
-  }
+const mapStateToProps = ({names}) => {
+  return {names};
+};
 
-  render(){
-    return(<div className='app-container'>
-    <form>
-      <input type="text" />
-      <button type="submit">Enter</button>
-    </form>
-  </div>)
-  }
-}
-
-export default Lobby
+export default connect(mapStateToProps)(Lobby);

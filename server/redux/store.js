@@ -1,11 +1,12 @@
-const { createStore, applyMiddleware, combineReducers } = require("redux");
-const playersReducer = require("./reducers/playersReducer.js");
+const {createStore, applyMiddleware, combineReducers} = require('redux');
+const playersReducer = require('./reducers/playersReducer.js');
+const lobbyReducer = require('./reducers/lobbyReducer');
 
 const rootReducer = combineReducers({
-  players: playersReducer
+  players: playersReducer,
+  names: lobbyReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer);
 
-
-module.exports = store
+module.exports = store;

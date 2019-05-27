@@ -1,11 +1,16 @@
-const { createStore, applyMiddleware, combineReducers } = require("redux");
-const playersReducer = require("./reducers/playersReducer.js");
+import {createStore, applyMiddleware, combineReducers} from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import playersReducer from './reducers/playersReducer';
+import gameStateReducer from './reducers/gameStateReducer';
+
+import lobbyReducer from './reducers/lobbyReducer';
 
 const rootReducer = combineReducers({
-  players: playersReducer
+  players: playersReducer,
+  names: lobbyReducer,
+  gameState: gameStateReducer
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-
-module.exports = store
+export default store;
