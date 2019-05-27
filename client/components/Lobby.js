@@ -12,7 +12,6 @@ const Lobby = props => {
 
   }
   const {lobby} = props;
-  console.log(lobby);
   if (!lobby.length) return <div />;
   return (
     <div>
