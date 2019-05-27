@@ -3,7 +3,6 @@ import {
   ADD_NEW_LOBBY,
   REMOVE_ONE_LOBBY,
   TOGGLE_READY,
-  NEW_PLAYER_READY,
 } from '../actions/lobbyActions';
 
 export default (state = [], action) => {

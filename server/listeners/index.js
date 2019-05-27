@@ -66,6 +66,12 @@ module.exports = io => {
     setInterval(() =>
       socket.emit('gameState', gameEngine(gameState), 1000 / 30)
     );
+
+    //get initial state
+    socket.on('fetchState', ()=>{
+      console.log(gameState.lobby)
+      socket.emit('initialState',gameState)
+    })
   });
   // };
   // wrapper(io);

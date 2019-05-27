@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import socket from '../socket';
+import {connect} from 'react-redux';
+import {addNewLobby} from '../redux/actions/lobbyActions';
 
 //import style
 import '../styles/Home.css';
@@ -19,8 +21,11 @@ class Home extends Component {
   handleSubmit = evt => {
     evt.preventDefault();
     const {playerName} = this.state;
+    const lobby = this.props.lobby.slice()
+    const newLobby = [...lobby,{id:socket.id,name:playerName, isReady:false}]
+    this.props.addNewLobby(newLobby);
     socket.emit('joinLobby', playerName);
-    this.props.history.push('/lobby')
+    this.props.history.push('/lobby');
   };
 
   render() {
@@ -51,4 +56,17 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {lobby: state.lobby};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewLobby: () => dispatch(addNewLobby()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
-import {Provider} from 'react-redux'
+import {Provider} from 'react-redux';
+import socket from '../socket';
 
 //components
 import Home from './Home';
@@ -9,12 +10,10 @@ import Game from './Game';
 
 //import style
 import '../styles/App.css';
+
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      playerName: 'Enter Your Name',
-    };
   }
 
   render() {
