@@ -1,15 +1,15 @@
 //redux store
-const store = require("../redux/store");
-const { joinLobby } = require("../redux/actions/lobbyActions");
-const gameState = require("../gameState");
+const store = require('../redux/store');
+const {joinLobby} = require('../redux/actions/lobbyActions');
+const gameState = require('../gameState');
 // const Player = require("../classes/Player");
 // const World = require("../classes/World");
 // const Projectile = require("../classes/Projectile");
-const gameEngine = require("../gameEngine");
+const gameEngine = require('../gameEngine');
 
 module.exports = io => {
   // const wrapper = io => {
-  io.on("connection", socket => {
+  io.on('connection', socket => {
     console.log(`${socket.id} has connected!!`);
 
     //world is created once  after game starts
@@ -23,38 +23,39 @@ module.exports = io => {
     // });
 
     // Listen for new players
-    socket.on("newPlayer", player => {
+    socket.on('newPlayer', player => {
       gameState.players[socket.id] = player;
     });
 
     // Listen for new moves
-    socket.on("move", move => {
+    socket.on('move', move => {
       // let x = gameState.players[socket.id]["x"];
       // let y = gameState.players[socket.id]["y"];
       // if (move.up) y -= 1;
       // if (move.down) y += 1;
       // if (move.left) x -= 1;
       // if (move.right) x += 1;
-
       // gameState.players[socket.id]["x"] = x;
       // gameState.players[socket.id]["y"] = y;
     });
 
     //Deletes player from player object
-    socket.on("disconnect", () => {
+    socket.on('disconnect', () => {
       delete gameState.players[socket.id];
+      delete gameState.lobby.filter(player => player.id ===socket.id);
+      console.log(`${socket.id} disconnected`);
     });
 
     //add new player to lobby
-    socket.on("joinLobby", name => {
-      store.dispatch(joinLobby(name));
-      const { names } = store.getState();
-      socket.emit("newLobby", names);
+    socket.on('joinLobby', name => {
+      gameState.lobby.push({id: socket.id, name: name, isReady: false});
+      console.log(gameState.lobby)
+      socket.emit('newLobby', gameState.lobby);
     });
 
     //gameEngine transforms gameState and emits whole new state to client
     setInterval(() =>
-      socket.emit("gameState", gameEngine(gameState), 1000 / 30)
+      socket.emit('gameState', gameEngine(gameState), 1000 / 30)
     );
   });
   // };

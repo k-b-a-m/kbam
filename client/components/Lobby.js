@@ -8,8 +8,8 @@ const currentPlayer = 'joe';
 //import style
 import '../styles/Lobby.css';
 const Lobby = props => {
-  const {names}=props;
-  console.log(names);
+  const {lobby}=props;
+  console.log(lobby);
   return (
     <div>
       <div>
