@@ -22,22 +22,23 @@ module.exports = io => {
     //   projectiles[socket.id].push(new projectile(...projectileInfo));
     // });
 
-    //Listen for new players
-    // socket.on("createPlayer", name => {
-    //   gameState.players[socket.id] = new Player(name, Math.random()*1000, Math.random()*1000, 100, 2);
-    // });
+    // Listen for new players
+    socket.on("newPlayer", player => {
+      console.log(player)
+     // gameState.players[socket.id] = player;
+    });
 
     // Listen for new moves
     socket.on("move", move => {
-      let x = gameState.players[socket.id]["x"];
-      let y = gameState.players[socket.id]["y"];
-      if (move.up) y -= 1;
-      if (move.down) y += 1;
-      if (move.left) x -= 1;
-      if (move.right) x += 1;
+      // let x = gameState.players[socket.id]["x"];
+      // let y = gameState.players[socket.id]["y"];
+      // if (move.up) y -= 1;
+      // if (move.down) y += 1;
+      // if (move.left) x -= 1;
+      // if (move.right) x += 1;
 
-      gameState.players[socket.id]["x"] = x;
-      gameState.players[socket.id]["y"] = y;
+      // gameState.players[socket.id]["x"] = x;
+      // gameState.players[socket.id]["y"] = y;
     });
 
     //Deletes player from player object

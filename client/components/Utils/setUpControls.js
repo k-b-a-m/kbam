@@ -9,6 +9,7 @@ export default document => {
 
   //Key down event listener to continue moving
   document.addEventListener("keydown", event => {
+    console.log(event)
     switch (event.keyCode) {
       case 38: //Up Arrow
       case 87: //W
@@ -54,6 +55,5 @@ export default document => {
   document.addEventListener("click", event => {
       console.log(event)
   })
-  
-  setInterval(() => socket.emit("move", move), 1000 / 60);
+  // setInterval(() => socket.emit("move", move), 1000 / 60);
 };
