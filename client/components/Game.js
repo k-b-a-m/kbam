@@ -5,29 +5,24 @@ import setUpControls from "./Utils/setUpControls";
 import makePlayer from "./classes/Player";
 import Matter from "matter-js";
 
-const { Engine, Render, Bodies, World } = Matter;
+const { Engine, Render, Bodies, World, Mouse, MouseConstraint, Events, Runner } = Matter;
+
+const players = [
+  {name: 'Kyle', x: 300, y: 200, h: 50, w: 50, health: 100},
+  // {name: 'Mariano', x: 500, y: 200, h: 50, w: 50, health: 100},
+  // {name: 'Alex', x: 200, y: 500, h: 50, w: 50, health: 100},
+  // {name: 'Bao', x: 100, y: 100, h: 50, w: 50, health: 100},
+]
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    // this.canvasRef = React.createRef();
+    this.canvasRef = React.createRef();
   }
 
   componentDidMount() {
     //Set Up Control Event Listeners
 
-    //Create player //name will be passed in from lobby
-    const name = "Player";
-    const player = makePlayer(name, 200, 200, 100, 100, 100);
-
-    setUpControls(document, player);
-    console.log(player.vertices);
-
-    socket.emit("newPlayer", {   position: {x:player.position.x,y:player.position.y},
-    velocity: player.velocity,
-    // vertices: [player.vertices[0],player.vertices[1],player.vertices[2],player.vertices[3]]
-   
-    });
 
     //Create engine
     const engine = Engine.create();
@@ -37,16 +32,70 @@ class Game extends React.Component {
     //in built renderer
     const render = Render.create({
       element: document.body,
-      engine: engine
+      engine: engine,
+      options: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        wireframes: false
+
+      }
+    });
+
+    let mouse = Mouse.create(render.canvas),
+        mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: {
+                stiffness: 0.2,
+                render: {
+                    visible: true
+                }
+            }
+        });
+
+    World.add(engine.world, mouseConstraint);
+
+    Render.lookAt(render, {
+      min: { x: 0, y: 0 },
+      max: { x: 1920, y: 1080 }
     });
 
     //Bottom wall
-    var bottomWall = Bodies.rectangle(0, window.height, window.width, 60, {
+    let bottomWall = Bodies.rectangle(0, 1100, 4200, 100, {
       isStatic: true
     });
 
+    let topWall = Bodies.rectangle(0, 0, 4200, 100, {
+      isStatic: true,
+    })
+
+    let leftWall = Bodies.rectangle(-110, 0, 50, 2200, {
+      isStatic: true,
+    })
+
+    let rightWall = Bodies.rectangle(2050, 1000, 50, 2200, {
+      isStatic: true,
+    })
+
+    //Create player //name will be passed in from lobby
+    players.forEach(player => {
+      let curPlayer = makePlayer(player.name, player.x, player.y, player.h, player.w, player.health);
+      setUpControls(document, curPlayer);
+
+      socket.emit("newPlayer", {
+        position: {
+          x:curPlayer.position.x,
+          y:curPlayer.position.y
+        },
+        velocity: 1
+      });
+
+      World.add(engine.world, [curPlayer]);
+    });
+
+    // vertices: [player.vertices[0],player.vertices[1],player.vertices[2],player.vertices[3]]
+
     // add all of the bodies to the world
-    World.add(engine.world, [player, bottomWall]);
+    World.add(engine.world, [bottomWall, topWall, leftWall, rightWall]);
 
     // run the engine
     Engine.run(engine);
@@ -54,8 +103,6 @@ class Game extends React.Component {
     // run the renderer
     Render.run(render);
 
-    // const canvas = this.refs.canvas;
-    // const ctx = canvas.getContext("2d");
 
     socket.on("gameState", gameState => {
       // ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)

@@ -8,13 +8,13 @@ const currentPlayer = 'joe';
 //import style
 import '../styles/Lobby.css';
 const Lobby = props => {
-  const {names}=props;
+  const {names}= props;
   console.log(names);
   return (
     <div>
       <div>
         <ol>
-          {othersName.map((name, index) => (
+          {names.map((name, index) => (
             <li
               key={index}
               className={`${name === currentPlayer ? 'current-player' : ''}`}
@@ -25,13 +25,13 @@ const Lobby = props => {
         </ol>
       </div>
       <button>Ready</button>
-      <button>Cancel</button>
+      <button onClick={() => props.history.push('/')}>Cancel</button>
     </div>
   );
 };
 
 const mapStateToProps = ({names}) => {
-  return {names: names};
+  return {names};
 };
 
 export default connect(mapStateToProps)(Lobby);
