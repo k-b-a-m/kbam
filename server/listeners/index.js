@@ -2,9 +2,9 @@
 const store = require("../redux/store");
 const { joinLobby } = require("../redux/actions/lobbyActions");
 const gameState = require("../gameState");
-const Player = require("../classes/Player");
-const World = require("../classes/World");
-const Projectile = require("../classes/Projectile");
+// const Player = require("../classes/Player");
+// const World = require("../classes/World");
+// const Projectile = require("../classes/Projectile");
 const gameEngine = require("../gameEngine");
 
 module.exports = io => {
@@ -13,19 +13,19 @@ module.exports = io => {
     console.log(`${socket.id} has connected!!`);
 
     //world is created once  after game starts
-    socket.on("createWorld", () => {
-      gameState.world = new World(1000, 1000);
-    });
+    // socket.on("createWorld", () => {
+    //   gameState.world = new World(1000, 1000);
+    // });
 
     //Player shoots
-    socket.on("createProjectile", projectileInfo => {
-      projectiles[socket.id].push(new projectile(...projectileInfo));
-    });
+    // socket.on("createProjectile", projectileInfo => {
+    //   projectiles[socket.id].push(new projectile(...projectileInfo));
+    // });
 
     //Listen for new players
-    socket.on("createPlayer", name => {
-      gameState.players[socket.id] = new Player(name, Math.random()*1000, Math.random()*1000, 100, 2);
-    });
+    // socket.on("createPlayer", name => {
+    //   gameState.players[socket.id] = new Player(name, Math.random()*1000, Math.random()*1000, 100, 2);
+    // });
 
     // Listen for new moves
     socket.on("move", move => {
