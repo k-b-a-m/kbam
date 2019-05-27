@@ -20,7 +20,7 @@ const Lobby = props => {
           {lobby.map(player => (
             <li
               key={player.id}
-              className={`${name === currentPlayer.name ? 'current-player' : ''} ${player.isReady? 'ready':''}`}
+              className={`${player.name === currentPlayer.name ? 'current-player' : ''} ${player.isReady? 'ready':''}`}
             >
               {player.name}
             </li>

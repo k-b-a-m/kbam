@@ -24,7 +24,7 @@ export default socket => {
     store.dispatch(toggleReady(id));
   });
   //update other players when a player hit ready
-  // socket.on('newPlayerReady', player =>{
-  //   store.dispatch()
-  // })
+  socket.on('newPlayerReady', id => {
+    store.dispatch(toggleReady(id));
+  });
 };
