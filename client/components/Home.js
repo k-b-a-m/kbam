@@ -20,6 +20,7 @@ class Home extends Component {
     evt.preventDefault();
     const {playerName} = this.state;
     socket.emit('joinLobby', playerName);
+    this.props.history.push('/lobby')
   };
 
   render() {

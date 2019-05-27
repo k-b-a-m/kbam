@@ -1,6 +1,3 @@
-//redux store
-const store = require('../redux/store');
-const {joinLobby} = require('../redux/actions/lobbyActions');
 const gameState = require('../gameState');
 // const Player = require("../classes/Player");
 // const World = require("../classes/World");
@@ -42,15 +39,20 @@ module.exports = io => {
     //Deletes player from player object
     socket.on('disconnect', () => {
       delete gameState.players[socket.id];
-      delete gameState.lobby.filter(player => player.id ===socket.id);
+      //remove player from lobby
+      gameState.lobby = gameState.lobby.filter(
+        player => player.id !== socket.id
+      );
+      socket.broadcast.emit('removeOneLobby',socket.id);
       console.log(`${socket.id} disconnected`);
     });
 
     //add new player to lobby
     socket.on('joinLobby', name => {
       gameState.lobby.push({id: socket.id, name: name, isReady: false});
-      console.log(gameState.lobby)
+      console.log(gameState.lobby);
       socket.emit('newLobby', gameState.lobby);
+      socket.broadcast.emit('addNewLobby', gameState.lobby[gameState.lobby.length-1]);
     });
 
     //gameEngine transforms gameState and emits whole new state to client

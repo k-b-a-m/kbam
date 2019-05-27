@@ -1,25 +1,29 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import socket from '../socket';
 
-//fake seed
-const othersName = ['joe', 'john', 'vil', 'wes'];
 const currentPlayer = 'joe';
 
 //import style
 import '../styles/Lobby.css';
 const Lobby = props => {
-  const {lobby}=props;
+
+  const handleReady= ()=>{
+
+  }
+  const {lobby} = props;
   console.log(lobby);
+  if (!lobby.length) return <div />;
   return (
     <div>
       <div>
         <ol>
-          {othersName.map((name, index) => (
+          {lobby.map(player => (
             <li
-              key={index}
+              key={player.id}
               className={`${name === currentPlayer ? 'current-player' : ''}`}
             >
-              {name}
+              {player.name}
             </li>
           ))}
         </ol>
@@ -30,8 +34,8 @@ const Lobby = props => {
   );
 };
 
-const mapStateToProps = ({names}) => {
-  return {names: names};
+const mapStateToProps = ({lobby}) => {
+  return {lobby: lobby};
 };
 
 export default connect(mapStateToProps)(Lobby);
