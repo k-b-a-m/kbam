@@ -1,4 +1,7 @@
+/* eslint-disable default-case */
+/* eslint-disable complexity */
 import socket from "../../socket";
+import {Body} from 'matter-js';
 export default (document, player) => {
   let move = {
     up: false,
@@ -12,22 +15,22 @@ export default (document, player) => {
     switch (event.keyCode) {
       case 38: //Up Arrow
       case 87: //W
-        player.position.y -= 1;
+        Body.applyForce(player, {x: player.position.x, y: player.position.y}, {x: 0, y: -0.02})
         move.up = true;
         break;
       case 40: //Down Arrow
       case 83: // S
-        player.position.y += 1;
+        Body.applyForce(player, {x: player.position.x, y: player.position.y}, {x: 0, y: 0.02})
         move.down = true;
         break;
       case 39: //Right Arrow
       case 68: // D
-        player.position.x += 1;
+        Body.applyForce(player, {x: player.position.x, y: player.position.y}, {x: 0.02, y: 0})
         move.right = true;
         break;
       case 37: //Left Arrow
       case 65: // A
-        player.position.x -= 1;
+        Body.applyForce(player, {x: player.position.x, y: player.position.y}, {x: -0.02, y: 0})
         move.left = true;
         break;
     }
@@ -56,6 +59,7 @@ export default (document, player) => {
   });
 
   document.addEventListener("click", event => {
+
     console.log(event);
   });
   // setInterval(() => socket.emit("move", move), 1000 / 60);

@@ -27,7 +27,6 @@ const Lobby = props => {
   if (allReady.length === lobby.length) {
     return <Redirect to="/game" />;
   }
-
   return (
     <div>
       <div>
