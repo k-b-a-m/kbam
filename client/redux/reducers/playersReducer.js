@@ -1,6 +1,10 @@
+import { getPlayers } from "../actions/playersActions";
+import axios from 'axios';
+
 const {
   ADD_PLAYER,
   UPDATE_PLAYER,
+  GET_PLAYERS,
   addPlayer,
   updatePlayer,
 } = './actions/playerActions';
@@ -20,6 +24,13 @@ export const updatePlayerThunk = player => {
   };
 };
 
+export const fetchPlayers = () => {
+  return dispatch => {
+    return axios.get('/api/players')
+      .then(res => dispatch(getPlayers(res.data)))
+  }
+}
+
 //REDUCER
 
 export default (state = [], action) => {
@@ -32,6 +43,8 @@ export default (state = [], action) => {
       );
       return [updatedPlayers, action.player];
     }
+    case GET_PLAYERS:
+      return {...state, players: action.players}
     default:
       return state;
   }

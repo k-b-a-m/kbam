@@ -4,25 +4,29 @@ import drawPlayers from "./Utils/drawPlayers";
 import setUpControls from "./Utils/setUpControls";
 import makePlayer from "./classes/Player";
 import Matter from "matter-js";
+import {fetchPlayers} from '../redux/reducers/playersReducer';
+import {connect} from 'react-redux';
 
 const { Engine, Render, Bodies, World, Mouse, MouseConstraint, Events, Runner } = Matter;
 
-const players = [
-  {name: 'Kyle', x: 300, y: 200, h: 50, w: 50, health: 100},
-  // {name: 'Mariano', x: 500, y: 200, h: 50, w: 50, health: 100},
-  // {name: 'Alex', x: 200, y: 500, h: 50, w: 50, health: 100},
-  // {name: 'Bao', x: 100, y: 100, h: 50, w: 50, health: 100},
-]
+const mapStateToProps = (state) => {
+  return{
+    players: state.lobby,
+    gameState: state.gameState,
+  }
+};
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
+    this.state = {
+      players: [],
+    }
   }
 
   componentDidMount() {
     //Set Up Control Event Listeners
-
 
     //Create engine
     const engine = Engine.create();
@@ -77,20 +81,24 @@ class Game extends React.Component {
     })
 
     //Create player //name will be passed in from lobby
-    players.forEach(player => {
-      let curPlayer = makePlayer(player.name, player.x, player.y, player.h, player.w, player.health);
-      setUpControls(document, curPlayer);
+    const {players} = this.props;
+    console.log(players);
+    let myPlayer = players.find(player => player.id === socket.id);
 
-      socket.emit("newPlayer", {
-        position: {
-          x:curPlayer.position.x,
-          y:curPlayer.position.y
-        },
-        velocity: 1
-      });
+    myPlayer = makePlayer(myPlayer.name, (window.innerWidth*Math.random()), (window.innerHeight*Math.random()));
+    console.log(myPlayer.name)
+    setUpControls(document, myPlayer);
 
-      World.add(engine.world, [curPlayer]);
+    socket.emit("newPlayer", {
+      position: {
+        x:myPlayer.position.x,
+        y:myPlayer.position.y
+      }
     });
+
+    World.add(engine.world, [myPlayer]);
+
+
 
     // vertices: [player.vertices[0],player.vertices[1],player.vertices[2],player.vertices[3]]
 
@@ -127,4 +135,4 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+export default connect(mapStateToProps)(Game);

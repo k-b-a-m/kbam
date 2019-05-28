@@ -5,7 +5,7 @@ const ADD_PLAYER = 'ADD_PLAYER';
 const UPDATE_PLAYER = 'UPDATE_PLAYER';
 
 //Action Creators
-export const getPlayers = () => {
+export const getPlayers = (players) => {
   return {
     type: GET_PLAYERS,
     players,
