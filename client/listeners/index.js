@@ -35,4 +35,9 @@ export default socket => {
   socket.on('newPlayerReady', id => {
     store.dispatch(toggleReady(id));
   });
+
+  //when a player leaves lobby
+  socket.on('leaveLobby', id => {
+    store.dispatch(removeOneLobby(id));
+  });
 };

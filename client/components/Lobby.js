@@ -6,18 +6,28 @@ import {Redirect} from 'react-router-dom';
 //import style
 import '../styles/Lobby.css';
 const Lobby = props => {
+  const {lobby, history} = props;
+
   const handleClick = () => {
     socket.emit('toggleReady', socket.id);
   };
-  const {lobby} = props;
-  console.log(lobby);
+
+  const handleLeave = () => {
+    socket.emit('leaveLobby', socket.id);
+    history.push('/');
+  };
+
   if (!lobby.length) return <div />;
+
   const currentPlayer = lobby.find(player => player.id === socket.id);
   // if (lobby.length && !currentPlayer) return <Redirect to="/" />;
   const allReady = lobby.filter(player => player.isReady === true);
+
+  //if all players are ready, redirect to game page to start
   if (allReady.length === lobby.length) {
     return <Redirect to="/game" />;
   }
+
   return (
     <div>
       <div>
@@ -39,6 +49,7 @@ const Lobby = props => {
       ) : (
         <button onClick={handleClick}>Ready</button>
       )}
+      <button onClick={handleLeave}>Leave</button>
     </div>
   );
 };

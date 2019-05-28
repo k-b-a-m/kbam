@@ -43,35 +43,48 @@ module.exports = io => {
       gameState.lobby = gameState.lobby.filter(
         player => player.id !== socket.id
       );
-      socket.broadcast.emit('removeOneLobby',socket.id);
+      socket.broadcast.emit('removeOneLobby', socket.id);
       console.log(`${socket.id} disconnected`);
     });
-
-    //add new player to lobby
-    socket.on('joinLobby', name => {
-      gameState.lobby.push({id: socket.id, name: name, isReady: false});
-      socket.emit('newLobby', gameState.lobby);
-      socket.broadcast.emit('addNewLobby', gameState.lobby[gameState.lobby.length-1]);
-    });
-
-    //when player click ready
-    socket.on('toggleReady',id =>{
-      const player = gameState.lobby.filter(player => player.id ===id);
-      player.isReady = !player.isReady;
-      socket.emit('toggleReady', id);
-      socket.broadcast.emit('newPlayerReady', id)
-    })
 
     //gameEngine transforms gameState and emits whole new state to client
     setInterval(() =>
       socket.emit('gameState', gameEngine(gameState), 1000 / 30)
     );
 
+    /*LOBBY listeners
+    =====================================================================*/
+
+    //add new player to lobby
+    socket.on('joinLobby', name => {
+      gameState.lobby.push({id: socket.id, name: name, isReady: false});
+      socket.emit('newLobby', gameState.lobby);
+      socket.broadcast.emit(
+        'addNewLobby',
+        gameState.lobby[gameState.lobby.length - 1]
+      );
+    });
+
+    //when player click ready
+    socket.on('toggleReady', id => {
+      const player = gameState.lobby.filter(player => player.id === id);
+      player.isReady = !player.isReady;
+      socket.emit('toggleReady', id);
+      socket.broadcast.emit('newPlayerReady', id);
+    });
+
+    //when player leaves lobby
+    socket.on('leaveLobby', id => {
+      gameState.lobby = gameState.lobby.filter(player => player.id !== id);
+      socket.emit('leaveLobby', id);
+      socket.broadcast.emit('removeOneLobby', socket.id);
+    });
+
     //get initial state
-    socket.on('fetchState', ()=>{
-      console.log(gameState.lobby)
-      socket.emit('initialState',gameState)
-    })
+    socket.on('fetchState', () => {
+      console.log(gameState.lobby);
+      socket.emit('initialState', gameState);
+    });
   });
   // };
   // wrapper(io);
