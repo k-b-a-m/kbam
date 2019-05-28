@@ -7,7 +7,7 @@ import lobbyReducer from './reducers/lobbyReducer';
 
 const rootReducer = combineReducers({
   players: playersReducer,
-  names: lobbyReducer,
+  lobby: lobbyReducer,
   gameState: gameStateReducer
 });
 

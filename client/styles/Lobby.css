@@ -1,3 +1,7 @@
 .current-player {
   font-weight: bold;
 }
+
+.ready {
+  text-decoration: underline;
+}

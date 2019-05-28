@@ -1,4 +1,5 @@
 let gameState = {
+  lobby:[],
   players: {},
   projectiles: {
     owner:[]
