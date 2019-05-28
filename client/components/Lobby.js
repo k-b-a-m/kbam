@@ -19,6 +19,10 @@ const Lobby = props => {
 
   if (!lobby.length) return <div />;
 
+  if (Array.isArray(lobby[0])) {
+    lobby = [...lobby[0]];
+  }
+
   const currentPlayer = lobby.find(player => player.id === socket.id);
   // if (lobby.length && !currentPlayer) return <Redirect to="/" />;
   const allReady = lobby.filter(player => player.isReady === true);
