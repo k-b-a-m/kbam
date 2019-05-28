@@ -14,7 +14,7 @@ import {Bodies} from 'matter-js'
 //         // return {x:this.x, y:this.y}
 //     }
 // }
- const makePlayer =  (name, x, y, w, h, health = 100) => {
+ const makePlayer =  (name, x, y, w = 50, h = 50, health = 100) => {
     const player = Bodies.rectangle(x,y,w,h)
     player.name = name
     player.health = health
