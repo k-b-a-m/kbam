@@ -18,11 +18,6 @@ import World from '../classes/World';
 // engine.newGame(world);
 
 //io is already declared from socket.io/socket.io.js in index.html
-const socket = io(window.location.origin);
-
-socket.on("connect", function() {
-  console.log("I have made a connection to the server!");
-});
 
 //import style
 import '../styles/App.css';
