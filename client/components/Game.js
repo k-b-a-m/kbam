@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import socket from '../socket';
 import drawPlayers from './Utils/drawPlayers';
@@ -25,11 +26,33 @@ const players = [
   // {name: 'Alex', x: 200, y: 500, h: 50, w: 50, health: 100},
   // {name: 'Bao', x: 100, y: 100, h: 50, w: 50, health: 100},
 ];
+=======
+import React from "react";
+import socket from "../socket";
+import drawPlayers from "./Utils/drawPlayers";
+import setUpControls from "./Utils/setUpControls";
+import makePlayer from "./classes/Player";
+import Matter from "matter-js";
+import {fetchPlayers} from '../redux/reducers/playersReducer';
+import {connect} from 'react-redux';
+
+const { Engine, Render, Bodies, World, Mouse, MouseConstraint, Events, Runner } = Matter;
+
+const mapStateToProps = (state) => {
+  return{
+    players: state.lobby,
+    gameState: state.gameState,
+  }
+};
+>>>>>>> 6d78142380cf82a558142fdb6c2ef581b2cdcc87
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
+    this.state = {
+      players: [],
+    }
   }
 
   componentDidMount() {
@@ -87,6 +110,7 @@ class Game extends React.Component {
     });
 
     //Create player //name will be passed in from lobby
+<<<<<<< HEAD
     players.forEach(player => {
       let curPlayer = makePlayer(
         player.name,
@@ -135,6 +159,27 @@ class Game extends React.Component {
       madeBuilding.collisionFilter.category = building;
       addedBuildings.push(madeBuilding);
     }
+=======
+    const {players} = this.props;
+    console.log(players);
+    let myPlayer = players.find(player => player.id === socket.id);
+
+    myPlayer = makePlayer(myPlayer.name, (window.innerWidth*Math.random()), (window.innerHeight*Math.random()));
+    console.log(myPlayer.name)
+    setUpControls(document, myPlayer);
+
+    socket.emit("newPlayer", {
+      position: {
+        x:myPlayer.position.x,
+        y:myPlayer.position.y
+      }
+    });
+
+    World.add(engine.world, [myPlayer]);
+
+
+
+>>>>>>> 6d78142380cf82a558142fdb6c2ef581b2cdcc87
     // vertices: [player.vertices[0],player.vertices[1],player.vertices[2],player.vertices[3]]
 
     // add all of the bodies to the world
@@ -176,4 +221,4 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+export default connect(mapStateToProps)(Game);
