@@ -5,6 +5,8 @@ import setUpControls from './Utils/setUpControls';
 import makePlayer from './classes/Player';
 import Matter from 'matter-js';
 import makeObstacles from './classes/Obstacle';
+import makeBuildings from './classes/Building';
+import {tree, building} from './classes/bitmap';
 
 const {
   Engine,
@@ -110,8 +112,6 @@ class Game extends React.Component {
     /*Environment
     ==================================================================*/
 
-    //category bit map
-
     //Make obstacles
     const addedObstacles = [];
     for (let i = 0; i <= 10; ++i) {
@@ -120,13 +120,21 @@ class Game extends React.Component {
       const w = 120;
       const h = 150;
       const madeObstacle = makeObstacles(x, y, w, h, i);
-      madeObstacle.category = tree;
+      madeObstacle.collisionFilter.category = tree;
       addedObstacles.push(madeObstacle);
     }
 
-
     //Make buildings
-
+    const addedBuildings = [];
+    for (let i = 0; i <= 10; ++i) {
+      const x = Math.floor(Math.random() * 1920);
+      const y = Math.floor(Math.random() * 1080);
+      const w = 150;
+      const h = 150;
+      const madeBuilding = makeBuildings(x, y, w, h, i);
+      madeBuilding.collisionFilter.category = building;
+      addedBuildings.push(madeBuilding);
+    }
     // vertices: [player.vertices[0],player.vertices[1],player.vertices[2],player.vertices[3]]
 
     // add all of the bodies to the world
@@ -136,6 +144,7 @@ class Game extends React.Component {
       leftWall,
       rightWall,
       ...addedObstacles,
+      ...addedBuildings,
     ]);
 
     // run the engine

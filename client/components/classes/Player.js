@@ -1,5 +1,5 @@
 import {Bodies} from 'matter-js';
-import {tree} from './bitmap';
+import {tree, building} from './bitmap';
 // export default class Player{
 // 	constructor(name, health = 100, x, y , w, h){
 //         this.name = name,
